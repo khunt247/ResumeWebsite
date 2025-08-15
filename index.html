@@ -1,0 +1,917 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Katie Hunt | High-Performance Resume</title>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet"/>
+<style>
+    :root {
+      --navy: #1a2238;
+      --navy-dark: #151a2c;
+      --white: #fff;
+      --black: #222;
+      --blue: #0096ff;
+      --blue-light: #3ec6ff;
+      --card-bg: #f7faff;
+      --shadow: 0 6px 32px rgba(26,34,56,0.13);
+      --radius: 18px;
+      --timeline-dot: #0096ff;
+    }
+    html, body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      min-height: 100vh;
+      background: linear-gradient(120deg, var(--navy-dark) 0%, var(--navy) 60%, var(--blue) 100%);
+      font-family: 'Barlow', sans-serif;
+      color: var(--white);
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      overflow-x: hidden;
+      position: relative;
+    }
+    /* Dynamic SVG background with parallax */
+    .bg-svg {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw; height: 100vh;
+      z-index: 0;
+      pointer-events: none;
+      opacity: 0.18;
+      will-change: transform;
+      transition: transform 0.5s cubic-bezier(.77,0,.18,1);
+    }
+    /* Animated header */
+    .header {
+      text-align: center;
+      margin-bottom: 40px;
+      position: relative;
+      z-index: 2;
+    }
+    .header h1 {
+      font-family: 'Barlow', sans-serif;
+      font-size: 3.2rem;
+      color: var(--white);
+      margin-bottom: 0.2em;
+      letter-spacing: 1.5px;
+      font-weight: 700;
+      position: relative;
+      display: inline-block;
+      z-index: 1;
+      text-shadow: 0 4px 24px rgba(0,0,0,0.18);
+      opacity: 0;
+      transform: scale(0.8) translateY(-40px);
+      animation: headerIn 1.2s cubic-bezier(.77,0,.18,1) 0.2s forwards;
+    }
+    @keyframes headerIn {
+      to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+      }
+    }
+    .header .underline {
+      width: 0;
+      height: 6px;
+      background: linear-gradient(90deg, var(--blue), var(--white));
+      border-radius: 3px;
+      margin: 0 auto;
+      animation: underline-in 1.2s cubic-bezier(.77,0,.18,1) 1s forwards;
+    }
+    @keyframes underline-in {
+      from { width: 0; opacity: 0; }
+      to { width: 100px; opacity: 1; }
+    }
+    .subtitle, .contact {
+      text-align: center;
+      font-size: 1.25rem;
+      margin-top: 12px;
+      margin-bottom: 0;
+      color: var(--blue);
+      font-family: 'Barlow', sans-serif;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      text-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      z-index: 2;
+      position: relative;
+    }
+    .contact {
+      color: var(--white);
+      margin-bottom: 32px;
+      font-size: 1.08rem;
+      font-family: 'Barlow', sans-serif;
+      font-weight: 400;
+      text-shadow: none;
+    }
+    /* Section Cards */
+    .container {
+      max-width: 1000px;
+      margin: 56px auto 0 auto;
+      padding: 0 24px 64px 24px;
+      position: relative;
+      z-index: 1;
+    }
+    .section {
+      background: rgba(26,34,56,0.92);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      margin-bottom: 40px;
+      padding: 38px 36px 28px 36px;
+      opacity: 0;
+      transform: translateY(50px);
+      transition: opacity 0.9s cubic-bezier(.77,0,.18,1), transform 0.9s cubic-bezier(.77,0,.18,1);
+      color: var(--white);
+      position: relative;
+    }
+    .section.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .section-title {
+      color: var(--blue-light);
+      font-size: 1.5rem;
+      font-family: 'Barlow', sans-serif;
+      font-weight: 700;
+      margin-bottom: 22px;
+      border-left: 6px solid var(--blue-light);
+      padding-left: 16px;
+      letter-spacing: 0.5px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .section-title .emoji {
+      font-size: 1.6em;
+      margin-right: 6px;
+    }
+    /* Technical Skills (grouped) */
+    .skills-groups {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 28px 36px;
+      margin-bottom: 0;
+      margin-top: 0;
+    }
+    .skills-group {
+      background: rgba(0,150,255,0.10);
+      border-radius: 14px;
+      padding: 18px 22px 14px 22px;
+      min-width: 210px;
+      flex: 1 1 220px;
+      box-shadow: 0 2px 12px rgba(0,150,255,0.08);
+      margin-bottom: 0;
+    }
+    .skills-group-title {
+      color: var(--blue);
+      font-family: 'Barlow', sans-serif;
+      font-size: 1.08rem;
+      font-weight: 700;
+      margin-bottom: 10px;
+      letter-spacing: 0.5px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .skills-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px 16px;
+    }
+    .skills-list li {
+      background: var(--navy);
+      color: var(--white);
+      padding: 6px 14px;
+      border-radius: 16px;
+      font-size: 0.98rem;
+      font-family: 'Barlow', sans-serif;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 2px 8px rgba(26,34,56,0.08);
+    }
+    /* Projects - Nike style */
+    .projects-intro {
+      font-family: 'Barlow', sans-serif;
+      font-size: 1.18rem;
+      color: var(--blue-light);
+      margin-bottom: 24px;
+      text-align: center;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      text-shadow: 0 2px 8px rgba(0,150,255,0.10);
+    }
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 28px;
+    }
+    .project-card {
+      background: linear-gradient(120deg, var(--navy) 60%, var(--blue-light) 100%);
+      border-radius: 16px;
+      box-shadow: 0 4px 18px rgba(0,150,255,0.13);
+      padding: 28px 22px 22px 22px;
+      color: var(--white);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+      min-height: 180px;
+      transition: transform 0.25s, box-shadow 0.25s;
+      cursor: pointer;
+    }
+    .project-card:hover {
+      transform: translateY(-6px) scale(1.03);
+      box-shadow: 0 8px 32px rgba(0,150,255,0.22);
+    }
+    .project-icon {
+      font-size: 2.6rem;
+      margin-bottom: 10px;
+      color: var(--blue-light);
+      filter: drop-shadow(0 2px 8px #0096ff33);
+      text-align: center;
+      width: 100%;
+      display: block;
+    }
+    .project-title {
+      font-family: 'Barlow', sans-serif;
+      font-size: 1.13rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+      color: var(--white);
+      letter-spacing: 0.2px;
+      text-align: center;
+      width: 100%;
+    }
+    .project-desc {
+      font-size: 1.01rem;
+      color: #e3e9f7;
+      font-family: 'Barlow', sans-serif;
+      font-weight: 400;
+      line-height: 1.5;
+      text-align: center;
+      width: 100%;
+    }
+    /* Timeline for Education & Experience */
+    .timeline {
+      position: relative;
+      margin: 0 0 0 30px;
+      padding-left: 30px;
+      border-left: 3px solid var(--blue-light);
+    }
+    .timeline-item {
+      position: relative;
+      margin-bottom: 36px;
+      padding-left: 24px;
+    }
+    .timeline-dot {
+      position: absolute;
+      left: -41px;
+      top: 8px;
+      width: 28px;
+      height: 28px;
+      background: var(--timeline-dot);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--white);
+      font-size: 1.3rem;
+      box-shadow: 0 2px 8px #0096ff33;
+      z-index: 2;
+    }
+    .timeline-title {
+      font-family: 'Barlow', sans-serif;
+      font-size: 1.13rem;
+      font-weight: 700;
+      color: var(--blue-light);
+      margin-bottom: 2px;
+    }
+    .timeline-sub {
+      font-size: 1.01rem;
+      color: var(--white);
+      font-weight: 600;
+      margin-bottom: 2px;
+    }
+    .timeline-desc {
+      font-size: 0.98rem;
+      color: #e3e9f7;
+      font-family: 'Barlow', sans-serif;
+      font-weight: 400;
+      line-height: 1.5;
+      margin-bottom: 2px;
+    }
+    .timeline-date {
+      font-size: 0.95rem;
+      color: var(--blue-light);
+      font-weight: 500;
+      margin-bottom: 2px;
+    }
+    /* Certifications */
+    .cert-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+      gap: 22px;
+      margin-top: 12px;
+    }
+    .cert-thumb {
+      background: #e3e9f7;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(26,34,56,0.10);
+      cursor: pointer;
+      overflow: hidden;
+      transition: box-shadow 0.2s, transform 0.2s;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 140px;
+      position: relative;
+      border: 2px solid var(--navy);
+    }
+    .cert-thumb:hover {
+      box-shadow: 0 6px 18px rgba(0,150,255,0.18);
+      transform: translateY(-4px) scale(1.04);
+    }
+    .cert-thumb img, .cert-thumb .pdf-icon {
+      max-width: 60px;
+      max-height: 60px;
+      display: block;
+      margin: 12px auto 0 auto;
+    }
+    .cert-label {
+      color: var(--navy);
+      font-family: 'Barlow', sans-serif;
+      font-size: 1.01rem;
+      font-weight: 600;
+      margin: 10px 0 0 0;
+      text-align: center;
+      padding: 0 6px;
+      letter-spacing: 0.2px;
+      line-height: 1.2;
+    }
+    /* Modal */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0; top: 0;
+      width: 100vw; height: 100vh;
+      background: rgba(26,34,56,0.7);
+      justify-content: center;
+      align-items: center;
+      animation: fadeIn 0.5s;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    .modal-content {
+      background: var(--white);
+      color: var(--navy);
+      padding: 32px 24px;
+      border-radius: 16px;
+      max-width: 90vw;
+      max-height: 90vh;
+      box-shadow: 0 4px 32px rgba(26,34,56,0.18);
+      text-align: center;
+      position: relative;
+      font-size: 1.1rem;
+      overflow: auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      animation: modalIn 0.6s cubic-bezier(.77,0,.18,1);
+    }
+    @keyframes modalIn {
+      from { opacity: 0; transform: scale(0.92); }
+      to { opacity: 1; transform: scale(1); }
+    }
+    .close {
+      position: absolute;
+      top: 12px;
+      right: 18px;
+      font-size: 2rem;
+      color: var(--navy);
+      cursor: pointer;
+      font-weight: 700;
+    }
+    .cert-modal-pdf {
+      width: 60vw;
+      max-width: 600px;
+      height: 60vh;
+      border-radius: 10px;
+      margin-top: 18px;
+      box-shadow: 0 2px 12px rgba(26,34,56,0.12);
+      background: #eee;
+      border: none;
+    }
+    /* Download Button */
+    .download-btn {
+      background: linear-gradient(90deg, var(--blue), var(--navy));
+      color: var(--white);
+      padding: 22px 60px;
+      border-radius: 40px;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 1.3rem;
+      margin: 56px auto 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: fit-content;
+      text-align: center;
+      box-shadow: 0 4px 24px rgba(0,150,255,0.18);
+      letter-spacing: 1.2px;
+      border: 3px solid var(--blue-light);
+      position: relative;
+      overflow: hidden;
+      transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+      animation: pulseGlow 2.2s infinite alternate;
+    }
+    .download-btn i {
+      margin-right: 14px;
+      font-size: 1.5em;
+      color: var(--blue-light);
+      filter: drop-shadow(0 2px 8px #0096ff33);
+    }
+    .download-btn:hover {
+      background: linear-gradient(90deg, var(--navy), var(--blue));
+      transform: scale(1.07);
+      box-shadow: 0 8px 32px rgba(0,150,255,0.32);
+      border-color: var(--blue);
+    }
+    @keyframes pulseGlow {
+      from { box-shadow: 0 4px 24px rgba(0,150,255,0.18); }
+      to { box-shadow: 0 8px 48px 8px #0096ff55; }
+    }
+    /* Presentations */
+    .presentations {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 32px 36px;
+      margin-top: 18px;
+      justify-content: flex-start;
+    }
+    .presentation {
+      background: #e3e9f7;
+      border-radius: 14px;
+      box-shadow: 0 2px 8px rgba(26,34,56,0.10);
+      padding: 18px 18px 10px 18px;
+      min-width: 320px;
+      max-width: 520px;
+      flex: 1 1 340px;
+      color: var(--navy);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    .presentation-title {
+      font-family: 'Barlow', sans-serif;
+      font-size: 1.08rem;
+      font-weight: 700;
+      margin-bottom: 10px;
+      color: var(--navy);
+      text-align: center;
+    }
+    .presentation iframe {
+      border-radius: 8px;
+      margin-bottom: 8px;
+      width: 100%;
+      min-height: 220px;
+      max-width: 500px;
+      background: #fff;
+      border: none;
+    }
+    .presentation.centered {
+      margin: 0 auto 32px auto;
+      max-width: 600px;
+      min-width: 320px;
+      width: 100%;
+      box-shadow: 0 6px 32px rgba(0,150,255,0.18);
+      border: 3px solid var(--blue-light);
+      background: #f7faff;
+      animation: pulseGlow 2.2s infinite alternate;
+    }
+    /* Responsive */
+    @media (max-width: 1100px) {
+      .container { max-width: 98vw; }
+      .presentations { flex-direction: column; align-items: stretch; }
+    }
+    @media (max-width: 700px) {
+      .container { padding: 10px 2vw 32px 2vw; }
+      h1 { font-size: 2rem; }
+      .section-title { font-size: 1.1rem; }
+      .section { padding: 14px 6px 10px 6px; }
+      .cert-modal-pdf { width: 98vw; max-width: 98vw; }
+      .presentation, .presentation.centered { min-width: 90vw; max-width: 98vw; }
+      .presentation iframe, .presentation.centered iframe { min-width: 90vw; max-width: 98vw; }
+    }
+  
+    /* Animated underline for section headers */
+    .section-title {
+      position: relative;
+      display: inline-block;
+      padding-bottom: 4px;
+    }
+    .section-title::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--blue-light), var(--white));
+      transition: width 0.3s ease;
+    }
+    .section-title:hover::after {
+      width: 100%;
+    }
+
+
+    /* Fade-in for Nike-inspired background */
+    .bg-svg {
+      opacity: 0;
+      animation: fadeInBG 2s ease forwards;
+    }
+    @keyframes fadeInBG {
+      to { opacity: 0.28; }
+    }
+
+
+    /* Pulsing CTA buttons */
+    .download-btn {
+      animation: pulseCTA 2s infinite alternate;
+    }
+    @keyframes pulseCTA {
+      from { transform: scale(1); box-shadow: 0 4px 24px rgba(0,150,255,0.18); }
+      to { transform: scale(1.05); box-shadow: 0 8px 32px rgba(0,150,255,0.32); }
+    }
+
+
+    /* Softer blue gradient + hover lift for Technical Skills groups */
+    .skills-group {
+      background: linear-gradient(120deg, rgba(10, 25, 47, 0.95) 60%, rgba(0, 150, 255, 0.15) 100%);
+      transition: transform 0.25s, box-shadow 0.25s;
+      cursor: pointer;
+    }
+    .skills-group:hover {
+      transform: translateY(-6px) scale(1.03);
+      box-shadow: 0 8px 32px rgba(0,150,255,0.22);
+    }
+
+</style>
+</head>
+<body>
+<!-- Nike-inspired SVG background shapes with parallax -->
+<svg class="bg-svg" fill="none" id="bg-svg" viewbox="0 0 1920 1080" xmlns="http://www.w3.org/2000/svg">
+<path d="M0 800 Q600 900 1920 200 L1920 1080 L0 1080 Z" fill="#0096ff" opacity="0.18">
+<animate attributename="d" dur="12s" repeatcount="indefinite" values="M0 800 Q600 900 1920 200 L1920 1080 L0 1080 Z;
+                M0 850 Q800 950 1920 300 L1920 1080 L0 1080 Z;
+                M0 800 Q600 900 1920 200 L1920 1080 L0 1080 Z"></animate>
+</path>
+<ellipse cx="1600" cy="200" fill="#1a2238" opacity="0.22" rx="320" ry="80">
+<animate attributename="cy" dur="10s" repeatcount="indefinite" values="200;300;200"></animate>
+</ellipse>
+<ellipse cx="400" cy="900" fill="#3ec6ff" opacity="0.13" rx="300" ry="60">
+<animate attributename="cy" dur="8s" repeatcount="indefinite" values="900;950;900"></animate>
+</ellipse>
+<path d="M0 850 Q700 950 1920 300 L1920 1080 L0 1080 Z" fill="#ffffff" opacity="0.05">
+<animate attributename="d" dur="18s" repeatcount="indefinite" values="M0 850 Q700 950 1920 300 L1920 1080 L0 1080 Z;
+                M0 820 Q900 920 1920 280 L1920 1080 L0 1080 Z;
+                M0 850 Q700 950 1920 300 L1920 1080 L0 1080 Z"></animate>
+</path>
+</svg>
+<div class="container">
+<div class="header">
+<h1>Katie Hunt</h1>
+<div class="underline"></div>
+</div>
+<div class="subtitle">Web Developer | Python &amp; SQL Developer | Data Analyst | Educator Turned Tech Enthusiast</div>
+<div class="contact">
+      📍 Atlanta, GA   |   📞 770-940-9245   |   ✉️ katiehunt95@gmail.com
+    </div>
+<div class="section" id="summary">
+<div class="section-title"><span class="emoji">🧠</span>Professional Summary</div>
+<p>I am a detail-oriented professional with a strong aptitude for technology, seeking an entry-level Web Developer, Python Developer, SQL Developer, or similar role. I specialize in web development, AI-assisted programming, AI agent development, and financial analytics. I thrive on tackling complex challenges, optimizing systems, and delivering results that matter. I am ready to bring relentless energy, technical excellence, and creative problem-solving to your team.
+</p>
+</div>
+<div class="section" id="skills">
+<div class="section-title"><span class="emoji">💻</span>Technical Skills</div>
+<div class="skills-groups">
+<div class="skills-group">
+<div class="skills-group-title">Programming</div>
+<ul class="skills-list">
+<li>Python</li>
+<li>SQL</li>
+<li>Pine Script</li>
+</ul>
+</div>
+<div class="skills-group">
+<div class="skills-group-title">Dev Environments</div>
+<ul class="skills-list">
+<li>PyCharm</li>
+<li>VS Code</li>
+<li>Google Colab</li>
+</ul>
+</div>
+<div class="skills-group">
+<div class="skills-group-title">AI &amp; Machine Learning</div>
+<ul class="skills-list">
+<li>Gen AI tools</li>
+<li>Prompt Engineering</li>
+<li>AI Agent Creation</li>
+<li>Coding with AI</li>
+</ul>
+</div>
+<div class="skills-group">
+<div class="skills-group-title">FinTech</div>
+<ul class="skills-list">
+<li>Financial Chart Analysis</li>
+<li>Trading Indicators</li>
+<li>Automated Strategies</li>
+<li>Risk/Reward Profiling</li>
+</ul>
+</div>
+<div class="skills-group">
+<div class="skills-group-title">Version Control &amp; Operations</div>
+<ul class="skills-list">
+<li>GitOps Admin</li>
+</ul>
+</div>
+<div class="skills-group">
+<div class="skills-group-title">Web Design &amp; Development</div>
+<ul class="skills-list">
+<li>Wix</li>
+<li>GoDaddy</li>
+<li>Replit</li>
+</ul>
+</div>
+<div class="skills-group">
+<div class="skills-group-title">Creative &amp; Visual Tools</div>
+<ul class="skills-list">
+<li>DaVinci Resolve</li>
+<li>Excel</li>
+<li>PowerPoint</li>
+<li>Prezi</li>
+<li>Canva</li>
+<li>Microsoft Suite</li>
+<li>Google Workspace</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="section" id="projects">
+<div class="section-title"><span class="emoji">🔧</span>Projects &amp; Technical Experience</div>
+<div class="projects-intro">Relentless innovation. Real-world impact. Here’s how I deliver high performance in tech and data.</div>
+<div class="projects-grid">
+<div class="project-card">
+<div class="project-icon">🤖</div>
+<div class="project-title">AI Agent &amp; Workflow Automation</div>
+<div class="project-desc">Built custom AI agents using prompt engineering and Python to streamline workflows and boost productivity.</div>
+</div>
+<div class="project-card">
+<div class="project-icon">📊</div>
+<div class="project-title">Machine Learning Solutions</div>
+<div class="project-desc">Designed end-to-end ML pipelines, implemented and tuned supervised models, and evaluated performance using industry metrics.</div>
+</div>
+<div class="project-card">
+<div class="project-icon">⚡</div>
+<div class="project-title">AI-Powered Coding</div>
+<div class="project-desc">Leveraged GitHub Copilot and AI IDEs for code generation, completion, and debugging. Explored ethical AI code practices.</div>
+</div>
+<div class="project-card">
+<div class="project-icon">🔄</div>
+<div class="project-title">GitOps Administration</div>
+<div class="project-desc">Completed hands-on GitOps training with Fleet. Set up infrastructure-as-code for version-controlled deployments.</div>
+</div>
+<div class="project-card">
+<div class="project-icon">📈</div>
+<div class="project-title">Trading Strategy &amp; Indicator Developer</div>
+<div class="project-desc">Created custom TradingView indicators, implemented semi-automated entry/exit systems, and specialized in code optimization.</div>
+</div>
+<div class="project-card">
+<div class="project-icon">🎨</div>
+<div class="project-title">Presentation &amp; Visual Design</div>
+<div class="project-desc">Produced dynamic visual presentations with DaVinci, Canva, Prezi, and PowerPoint. Simplified complex data visually.</div>
+</div>
+</div>
+</div>
+<div class="section" id="certifications">
+<div class="section-title"><span class="emoji">🏅</span>Certifications &amp; Training</div>
+<div class="cert-grid">
+<div class="cert-thumb" onclick="showCert(0)">
+<img alt="Developing Machine Learning Solutions Using AI" src="https://img.icons8.com/ios-filled/100/0096ff/certificate.png"/>
+<div class="cert-label">Developing Machine Learning Solutions Using AI</div>
+</div>
+<div class="cert-thumb" onclick="showCert(1)">
+<img alt="Coding with Artificial Intelligence Training" src="https://img.icons8.com/ios-filled/100/0096ff/certificate.png"/>
+<div class="cert-label">Coding with Artificial Intelligence Training</div>
+</div>
+<div class="cert-thumb" onclick="showCert(2)">
+<img alt="Fleet Certified GitOps Administrator – Level 1" src="https://img.icons8.com/ios-filled/100/0096ff/certificate.png"/>
+<div class="cert-label">Fleet Certified GitOps Administrator – Level 1</div>
+</div>
+<div class="cert-thumb" onclick="showCert(3)">
+<img alt="Programming with Python – Level 1" src="https://img.icons8.com/ios-filled/100/0096ff/certificate.png"/>
+<div class="cert-label">Programming with Python – Level 1</div>
+</div>
+<div class="cert-thumb" onclick="showCert(4)">
+<img alt="30-Day Bootcamp in Python Certification" src="https://img.icons8.com/ios-filled/100/0096ff/certificate.png"/>
+<div class="cert-label">30-Day Bootcamp in Python Certification</div>
+</div>
+<div class="cert-thumb" onclick="showCert(5)">
+<img alt="Programming Foundations with Python" src="https://img.icons8.com/ios-filled/100/0096ff/certificate.png"/>
+<div class="cert-label">Programming Foundations with Python</div>
+</div>
+<div class="cert-thumb" onclick="showCert(6)">
+<img alt="TTN Web Development – Level 1" src="https://img.icons8.com/ios-filled/100/0096ff/certificate.png"/>
+<div class="cert-label">TTN Web Development – Level 1</div>
+</div>
+
+<div class="cert-thumb" onclick="showCert(7)">
+<img alt="TTN+Cognizant Data Management workshop" src="https://img.icons8.com/ios-filled/100/0096ff/certificate.png"/>
+<div class="cert-label">TTN+Cognizant Data Management workshop</div>
+</div>
+</div>
+</div>
+<div class="section" id="education">
+<div class="section-title"><span class="emoji">🎓</span>Education &amp; Background</div>
+<div class="timeline">
+<div class="timeline-item">
+<div class="timeline-dot"><i class="fas fa-graduation-cap"></i></div>
+<div class="timeline-title">MAT, Health &amp; Physical Education</div>
+<div class="timeline-sub">Georgia State University</div>
+<div class="timeline-date">2021 — GPA: 3.89</div>
+</div>
+<div class="timeline-item">
+<div class="timeline-dot"><i class="fas fa-university"></i></div>
+<div class="timeline-title">BS, Interdisciplinary Studies</div>
+<div class="timeline-sub">Jackson State University</div>
+<div class="timeline-date">2017 — GPA: 3.159</div>
+</div>
+</div>
+</div>
+<div class="section" id="experience">
+<div class="section-title">Professional Experience</div>
+<div class="timeline">
+<div class="timeline-item">
+<div class="timeline-dot"><i class="fas fa-chalkboard-teacher"></i></div>
+<div class="timeline-title">Health and Physical Education Teacher</div>
+<div class="timeline-sub">Druid Hills High School, Atlanta, GA</div>
+<div class="timeline-date">Sep 2018 – May 2021</div>
+<ul class="timeline-desc">
+<li>Curated engaging lesson plans and school-wide events.</li>
+<li>Successfully coached sports teams, guiding students to achieve exceptional performance and sportsmanship.</li>
+<li>Ensured the safety of students during physical activities while following safety protocols.</li>
+</ul>
+</div>
+<div class="timeline-item">
+<div class="timeline-dot"><i class="fas fa-users"></i></div>
+<div class="timeline-title">Health and Physical Education Teacher</div>
+<div class="timeline-sub">A.R. “Gus” Barksdale Boys &amp; Girls Club, Conyers, GA</div>
+<div class="timeline-date">May 2016 – Sep 2018</div>
+<ul class="timeline-desc">
+<li>Delivered structured physical activity programs.</li>
+<li>Promoted fitness and teamwork in recreational settings.</li>
+<li>Fostered youth development through mentorship.</li>
+</ul>
+</div>
+<div class="timeline-item">
+<div class="timeline-dot"><i class="fas fa-campground"></i></div>
+<div class="timeline-title">Summer Camp Counselor &amp; Substitute Teacher</div>
+<div class="timeline-sub">Excell Preparatory Center, Stonecrest, GA</div>
+<div class="timeline-date">May 2015 – Aug 2016</div>
+<ul class="timeline-desc">
+<li>Provided educational support and supervision for students.</li>
+<li>Assisted with curriculum delivery and student engagement.</li>
+<li>Maintained safe and productive learning environments.</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="section" id="presentations">
+<div class="section-title">Featured Presentations</div>
+<div class="presentations">
+<div class="presentation">
+<div class="presentation-title">Graduate Work (Prezi)</div>
+<iframe allow="autoplay; fullscreen" allowfullscreen="" frameborder="0" height="315" src="https://prezi.com/p/embed/n6RgPuelj1GrHAgl0kZj/" width="100%"></iframe>
+</div>
+<div class="presentation">
+<div class="presentation-title">Undergraduate Work (Prezi)</div>
+<iframe allow="autoplay; fullscreen" allowfullscreen="" frameborder="0" height="315" src="https://prezi.com/p/embed/MNTI7RDzEtb51rtRLp7T/" width="100%"></iframe>
+</div>
+<div class="presentation">
+<div class="presentation-title">High School Work (PowerPoint: Sequences)</div>
+<iframe allowfullscreen="" frameborder="0" height="300px" src="https://1drv.ms/p/c/eea0422a88c34f3f/IQRRzH2uF7k2RacDQpFrJrOeAfxOPAVXKRj8G5U4n6bVqXk?wdAr=1.3333333333333333" width="490px"></iframe>
+</div>
+<div class="presentation">
+<div class="presentation-title">High School Work (PowerPoint: Limit)</div>
+<iframe allowfullscreen="" frameborder="0" height="300px" src="https://1drv.ms/p/c/eea0422a88c34f3f/IQTXkTiyB1cyQavStmOBe0xjARcTodbjk68Ny2EkX_wiLuA?wdAr=1.3333333333333333" width="500px"></iframe>
+</div>
+</div>
+<div class="presentation centered">
+<div class="presentation-title">Graduate Work (PowerPoint: Final Project)</div>
+<iframe allowfullscreen="" frameborder="0" height="300px" src="https://1drv.ms/p/c/eea0422a88c34f3f/IQQWxyflobHzSaJK1JjbzgxIAXl9DksehRgy70T5slb4Lxg?wdAr=1.7763888888888888" width="500px"></iframe>
+</div>
+</div>
+<a class="download-btn" download="" href="Hunt Resume.pdf"><i class="fas fa-download"></i>Download Resume</a>
+</div>
+<!-- Modal for certifications -->
+<div class="modal" id="certModal">
+<div class="modal-content">
+<span class="close" onclick="closeModal()">×</span>
+<div id="certDetail"></div>
+<iframe allowfullscreen="" class="cert-modal-pdf" id="certFrame" src=""></iframe>
+</div>
+</div>
+<script>
+    // Parallax effect for SVG background
+    document.addEventListener('mousemove', function(e) {
+      const svg = document.getElementById('bg-svg');
+      const x = (e.clientX / window.innerWidth - 0.5) * 30;
+      const y = (e.clientY / window.innerHeight - 0.5) * 30;
+      svg.style.transform = `translate(${x}px, ${y}px)`;
+    });
+    // Fade/slide in sections on scroll
+    function revealSections() {
+      const sections = document.querySelectorAll('.section');
+      const trigger = window.innerHeight * 0.92;
+      sections.forEach(section => {
+        const top = section.getBoundingClientRect().top;
+        if (top < trigger) {
+          section.classList.add('visible');
+        }
+      });
+    }
+    window.addEventListener('scroll', revealSections);
+    window.addEventListener('load', revealSections);
+
+    // Certification modal logic
+    const certDetails = [
+      {
+        title: 'Developing Machine Learning Solutions Using AI',
+        file: 'Hunt FGCU Developing Machine Learning Solutions Using AI Training.pdf'
+      },
+      {
+        title: 'Coding with Artificial Intelligence Training',
+        file: 'Hunt Coding with Artificial Intelligence Training.pdf'
+      },
+      {
+        title: 'Fleet Certified GitOps Administrator – Level 1',
+        file: 'Fleet Certified GitOps Administator.pdf'
+      },
+      {
+        title: 'Programming with Python – Level 1',
+        file: 'TTN Programming with Python – Level 1.pdf'
+      },
+      {
+        title: '30-Day Bootcamp in Python Certification',
+        file: 'Sanfoundry Python Certificate.pdf'
+      },
+      {
+        title: 'Programming Foundations with Python',
+        file: 'From Logic to Code_ Programming Foundations with Python.pdf'
+      },
+      {
+        title: 'TTN Web Development – Level 1',
+        file: 'TTN Web Development level1 Certificate.pdf'
+      }
+    
+      ,
+      {
+        title: 'TTN+Cognizant Data Management workshop',
+        file: 'TTN+Cognizant Data Management workshop Certificate.pdf'
+      }
+    ];
+    function showCert(idx) {
+      const cert = certDetails[idx];
+      document.getElementById('certDetail').innerHTML = `<b>${cert.title}</b>`;
+      document.getElementById('certFrame').src = cert.file;
+      document.getElementById('certModal').style.display = 'flex';
+    }
+    function closeModal() {
+      document.getElementById('certModal').style.display = 'none';
+      document.getElementById('certFrame').src = '';
+    }
+    window.onclick = function(event) {
+      const modal = document.getElementById('certModal');
+      if (event.target == modal) {
+        closeModal();
+      }
+    }
+  </script>
+</body>
+</html>
